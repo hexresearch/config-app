@@ -1,18 +1,3 @@
-# config-app
-
-Creates CLI-apps with config files in yaml format.
-The app has only one field `conf`:
-
-~~~
-> app-name --conf config.yaml
-~~~
-
-It reads the data from the YAML-file. If the file is missing it tires
-to find it at the directory `$(HOME)/.{app-name}/$({APP_NAME}_ENV)/config.yaml`
-
-An example:
-
-~~~haskell
 {-# Language
           TemplateHaskell
         , DeriveDataTypeable
@@ -40,17 +25,3 @@ main = configApp desc runConfig
 
 runConfig :: Config -> IO ()
 runConfig = print
-~~~
-
-To run:
-
-~~~
-> echo-config --conf config.yaml
-~~~
-
-Config file contains fields with stripped prefix:
-
-~~~yaml
-fieldA:  'first'
-fieldB:  2
-~~~
