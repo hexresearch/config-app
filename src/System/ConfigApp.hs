@@ -2,6 +2,7 @@
 module System.ConfigApp
   ( AppDesc(..)
   , ConfigPath(..)
+  , readConfigBy
   , configApp
   -- * Config deriving
   , deriveFromJSON
