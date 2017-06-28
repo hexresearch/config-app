@@ -1,6 +1,7 @@
 -- | Skeleton for application that reads a config file with --conf.
 module System.ConfigApp
   ( AppDesc(..)
+  , ConfigPath(..)
   , configApp
   -- * Config deriving
   , deriveFromJSON
