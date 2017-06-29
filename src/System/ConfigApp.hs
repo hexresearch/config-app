@@ -4,6 +4,7 @@ module System.ConfigApp
   , ConfigPath(..)
   , readConfigBy
   , configApp
+  , configAppWith
   -- * Config deriving
   , deriveFromJSON
   , defaultOptions
@@ -52,11 +53,18 @@ data AppDesc = AppDesc {
 --
 -- > $(HOME)/.{app-name}/$({APP_NAME}_ENV)/config.yaml
 configApp :: (MonadIO m, Data config, FromJSON config) => AppDesc -> (config -> m ()) -> m ()
-configApp AppDesc{..} runConfig = (liftIO $ execParser opts) >>= runOptions
-  where
-    runOptions configFile = runConfig =<< readConfigBy appName configFile
+configApp desc runConfig = configAppWith (pure ()) desc (const runConfig)
 
-    opts = info (helper <*> optionsParser)
+-- | Extends simple config app with constom options.
+-- The aux arguments are passed in the first argument as parsed with optparse-applicative.
+configAppWith :: (MonadIO m, Data config, FromJSON config) => Parser args -> AppDesc -> (args -> config -> m ()) -> m ()
+configAppWith argsParser AppDesc{..} runConfig = (liftIO $ execParser opts) >>= runOptions
+  where
+    runOptions (args, configFile) = runConfig args =<< readConfigBy appName configFile
+
+    fullParser = liftA2 (,) argsParser optionsParser
+
+    opts = info (helper <*> fullParser)
         ( fullDesc
        <> progDesc ("CLI interface for " ++ appName)
        <> header (appName ++ " - " ++ appDesc))
