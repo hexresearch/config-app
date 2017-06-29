@@ -54,3 +54,17 @@ Config file contains fields with stripped prefix:
 fieldA:  'first'
 fieldB:  2
 ~~~
+
+## Using custom CLI-arguments
+
+The function `configApp` uses only one argument `--conf` if it's not enough
+we can use more generic function. To use custom arguments there is a function:
+
+~~~haskell
+configAppWith :: (MonadIO m, Data config, FromJSON config)
+  => Parser args
+  -> AppDesc -> (args -> config -> m ()) -> m ()
+~~~
+
+It's almost the same as `configApp` but it also takes in an Parser for the rest arguments.
+And the callback `runConfig` now takes parsed result as the firt argument.
