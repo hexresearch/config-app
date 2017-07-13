@@ -1,13 +1,13 @@
 name:                config-app
 version:             0.1.0.2
--- synopsis:
+synopsis:            Constructor for CLI apps with YAML-config file
 -- description:
-homepage:            https://github.com/githubuser/config-app#readme
+homepage:            https://github.com/hexresearch/config-app#readme
 license:             BSD3
 license-file:        LICENSE
-author:              Author name here
+author:              HEX Research
 maintainer:          example@example.com
-copyright:           2017 Author name here
+copyright:           2017 HEX Research
 category:            Web
 build-type:          Simple
 extra-source-files:  README.md
@@ -36,4 +36,4 @@ library
 
 source-repository head
   type:     git
-  location: https://github.com/githubuser/config-app
+  location: https://github.com/hexresearch/config-app
